@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { Mail, MapPin, Phone } from "lucide-react";
 import "./styles.css";
@@ -50,9 +50,38 @@ const skillRows = [
 
 function Header() {
   const [spinning, setSpinning] = useState(false);
+  const [onRedPanel, setOnRedPanel] = useState(false);
+
+  useEffect(() => {
+    const updateNavTone = () => {
+      const sampleY = 58;
+      const sampleXs = [72, window.innerWidth * 0.56, window.innerWidth * 0.72, window.innerWidth * 0.86, window.innerWidth - 72];
+
+      setOnRedPanel(
+        sampleXs.some((x) =>
+          document
+            .elementsFromPoint(x, sampleY)
+            .some(
+              (element) =>
+                !element.closest(".masthead") &&
+                element.closest(".panel.next, .project-stack article.featured"),
+            ),
+        ),
+      );
+    };
+
+    updateNavTone();
+    window.addEventListener("scroll", updateNavTone, { passive: true });
+    window.addEventListener("resize", updateNavTone);
+
+    return () => {
+      window.removeEventListener("scroll", updateNavTone);
+      window.removeEventListener("resize", updateNavTone);
+    };
+  }, []);
 
   return (
-    <header className="masthead">
+    <header className={`masthead${onRedPanel ? " on-red-panel" : ""}`}>
       <a href="#cover" className="brand">
         <img
           className={spinning ? "logo-spin" : ""}
@@ -156,6 +185,56 @@ function Human() {
     ["Anime canon", "Attack on Titan first, singular, unmovable. Jojo's Bizarre Adventure. One Piece. Jujutsu Kaisen. Fullmetal Alchemist: Brotherhood. Code Geass. Made in Abyss."],
     ["Music weather", "TXT, Stray Kids, Monsta X, ENHYPEN, Seventeen, MAMAMOO, TWICE, NewJeans, LE SSERAFIM, KISS OF LIFE, KATSEYE. Ultimate bias: Choi Yeonjun."],
   ];
+  const archiveFrames = [
+    {
+      src: "/media/assets/meAndBook2.svg",
+      alt: "Aryan with a book",
+      caption: "Collects strange corners.",
+      fit: "contain",
+    },
+    {
+      src: "/media/assets/meguitar.png",
+      alt: "Aryan playing guitar",
+      caption: "Music as weather.",
+      fit: "cover",
+    },
+    {
+      src: "/media/assets/meReadingbook.svg",
+      alt: "Aryan reading",
+      caption: "Processes in lines.",
+      fit: "contain",
+    },
+    {
+      src: "/media/assets/me3.svg",
+      alt: "Aryan portrait variation",
+      caption: "Glitch frame.",
+      fit: "contain",
+    },
+    {
+      src: "/media/assets/me_glasses.png",
+      alt: "Aryan wearing glasses",
+      caption: "Low light, sharp focus.",
+      fit: "contain portrait",
+    },
+    {
+      src: "/media/assets/me_daurasurwal.png",
+      alt: "Aryan in daura surwal",
+      caption: "Formal mythology.",
+      fit: "contain portrait",
+    },
+    {
+      src: "/media/assets/me_birthday.png",
+      alt: "Aryan at a birthday celebration",
+      caption: "Another orbit.",
+      fit: "cover",
+    },
+    {
+      src: "/media/assets/me_swsc.png",
+      alt: "Aryan at Southwestern State College",
+      caption: "Before the arc.",
+      fit: "contain snug",
+    },
+  ];
 
   return (
     <section className="panel human" id="human">
@@ -180,18 +259,18 @@ function Human() {
         ))}
       </div>
       <div className="archive-wall" aria-label="Personal visual archive">
-        <figure>
-          <img src={asset("/media/assets/meAndBook2.svg")} alt="Aryan with a book" />
-          <figcaption>Collects strange corners.</figcaption>
-        </figure>
-        <figure>
-          <img src={asset("/media/assets/meguitar.png")} alt="Aryan playing guitar" />
-          <figcaption>Music as weather.</figcaption>
-        </figure>
-        <figure>
-          <img src={asset("/media/assets/meReadingbook.svg")} alt="Aryan reading" />
-          <figcaption>Processes in lines.</figcaption>
-        </figure>
+        <div className="archive-track" aria-hidden="true">
+          {[0, 1].map((loop) => (
+            <div className="archive-set" key={loop}>
+              {archiveFrames.map((frame) => (
+                <figure className={`archive-frame ${frame.fit}`} key={`${frame.caption}-${loop}`}>
+                  <img src={asset(frame.src)} alt={loop === 0 ? frame.alt : ""} />
+                  <figcaption>{frame.caption}</figcaption>
+                </figure>
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -280,9 +359,11 @@ function SkillsEducation() {
 function Next() {
   return (
     <section className="panel next">
-      <div>
+      <div className="next-title">
         <p className="topline">The next arc</p>
-        <h2>I want a problem with teeth.</h2>
+        <h2>
+          I want a problem <span className="keep-together">with teeth.</span>
+        </h2>
       </div>
       <div className="next-copy">
         <p>
@@ -294,6 +375,7 @@ function Next() {
           when the product has a pulse. Not a title. A problem worth staying in the room for.
         </p>
       </div>
+      <img className="next-pool" src={asset("/media/assets/pool_me.png")} alt="" aria-hidden="true" />
     </section>
   );
 }

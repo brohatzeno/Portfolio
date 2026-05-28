@@ -6,6 +6,8 @@ import "./styles.css";
 const mapUrl =
   "https://www.google.com/maps/place/Kapan,+44600/@27.7379982,85.3431592,14z/data=!3m1!4b1!4m6!3m5!1s0x39eb1be5bea00987:0x70cf02a942554e97!8m2!3d27.7360126!4d85.3601307!16s%2Fm%2F04jlw1m?entry=ttu&g_ep=EgoyMDI2MDUyNS4wIKXMDSoASAFQAw%3D%3D";
 
+const asset = (path) => `${import.meta.env.BASE_URL}${path.replace(/^\/+/, "")}`;
+
 const projects = [
   {
     title: "WhatsApp RAG Support Chatbot",
@@ -54,7 +56,7 @@ function Header() {
       <a href="#cover" className="brand">
         <img
           className={spinning ? "logo-spin" : ""}
-          src="/media/assets/logo.svg"
+          src={asset("/media/assets/logo.svg")}
           alt=""
           onClick={(event) => {
             event.preventDefault();
@@ -87,7 +89,7 @@ function Hero() {
       <h1>PORTFOLIO</h1>
       <p className="topline hero-kicker">Pseudo human</p>
       <p className="date">Born Aug 11, 2003</p>
-      <img className="hero-person" src="/media/assets/meShaded.png" alt="Aryan Karki portrait cutout" />
+      <img className="hero-person" src={asset("/media/assets/meShaded.png")} alt="Aryan Karki portrait cutout" />
       <div className="hero-copy">
         <p className="label">brohatzeno / Aryan Karki</p>
         <p>
@@ -102,7 +104,7 @@ function Hero() {
           <span>karkiii.aryan@gmail.com</span>
         </a>
         <a href="https://github.com/brohatzeno" target="_blank" rel="noreferrer">
-          <img src="/media/icons/github-svgrepo-com.svg" alt="" />
+          <img src={asset("/media/icons/github-svgrepo-com.svg")} alt="" />
           <span>github.com/brohatzeno</span>
         </a>
         <a href={mapUrl} target="_blank" rel="noreferrer">
@@ -141,7 +143,7 @@ function Intro() {
         <div className="height-line" aria-hidden="true">
           <span>5'10ft</span>
         </div>
-        <img src="/media/assets/me_cool.png" alt="Aryan Karki standing portrait" />
+        <img src={asset("/media/assets/me_cool.png")} alt="Aryan Karki standing portrait" />
       </figure>
     </section>
   );
@@ -162,7 +164,7 @@ function Human() {
           <p className="topline">The human, fully documented</p>
           <h2>I do it for the plot.</h2>
         </div>
-        <img className="leaning-cutout" src="/media/assets/melean.png" alt="" aria-hidden="true" />
+        <img className="leaning-cutout" src={asset("/media/assets/melean.png")} alt="" aria-hidden="true" />
       </div>
       <div className="human-grid">
         {humanCards.map(([title, body]) => (
@@ -179,15 +181,15 @@ function Human() {
       </div>
       <div className="archive-wall" aria-label="Personal visual archive">
         <figure>
-          <img src="/media/assets/meAndBook2.svg" alt="Aryan with a book" />
+          <img src={asset("/media/assets/meAndBook2.svg")} alt="Aryan with a book" />
           <figcaption>Collects strange corners.</figcaption>
         </figure>
         <figure>
-          <img src="/media/assets/meguitar.png" alt="Aryan playing guitar" />
+          <img src={asset("/media/assets/meguitar.png")} alt="Aryan playing guitar" />
           <figcaption>Music as weather.</figcaption>
         </figure>
         <figure>
-          <img src="/media/assets/meReadingbook.svg" alt="Aryan reading" />
+          <img src={asset("/media/assets/meReadingbook.svg")} alt="Aryan reading" />
           <figcaption>Processes in lines.</figcaption>
         </figure>
       </div>
@@ -199,8 +201,8 @@ function Work() {
   return (
     <section className="panel work" id="work">
       <div className="work-visuals" aria-hidden="true">
-        <img src="/media/assets/phonebooth.svg" alt="" />
-        <img src="/media/assets/building-1.svg" alt="" />
+        <img src={asset("/media/assets/phonebooth.svg")} alt="" />
+        <img src={asset("/media/assets/building-1.svg")} alt="" />
       </div>
       <p className="topline">November 2025 - May 2026 / Xuno</p>
       <h2>Six months. Three production systems. One continuous refusal to quit.</h2>
@@ -315,15 +317,15 @@ function Contact() {
           <span>+977 980 373 2718</span>
         </a>
         <a href="https://linkedin.com/in/karkiaryan" target="_blank" rel="noreferrer">
-          <img src="/media/icons/linkedin.svg" alt="" />
+          <img src={asset("/media/icons/linkedin.svg")} alt="" />
           <span>linkedin.com/in/karkiaryan</span>
         </a>
         <a href="https://github.com/brohatzeno" target="_blank" rel="noreferrer">
-          <img src="/media/icons/github-svgrepo-com.svg" alt="" />
+          <img src={asset("/media/icons/github-svgrepo-com.svg")} alt="" />
           <span>github.com/brohatzeno</span>
         </a>
       </div>
-      <img className="contact-selfie" src="/media/assets/meeror_selfie.png" alt="Aryan mirror selfie" />
+      <img className="contact-selfie" src={asset("/media/assets/meeror_selfie.png")} alt="Aryan mirror selfie" />
     </section>
   );
 }
